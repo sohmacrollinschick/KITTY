@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Inquiries Management</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="/admin/dashboard">Dashboard</a><a href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a class="active" href="/admin/inquiries">Inquiries</a><a href="/admin/reservations">Reservations</a><a href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content"><div class="panel"><h1>Inquiries</h1><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Kitten</th><th>Status</th><th>Actions</th></tr></thead><tbody id="inquiries-table"></tbody></table></div></main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-inquiries.js"></script>
+</body></html>
+
+

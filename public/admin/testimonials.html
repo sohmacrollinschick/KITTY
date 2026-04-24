@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Testimonials Manager</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="/admin/dashboard">Dashboard</a><a href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a href="/admin/inquiries">Inquiries</a><a href="/admin/reservations">Reservations</a><a class="active" href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content">
+    <div class="panel"><h1>Add / Edit Testimonial</h1><form id="testimonial-form" class="form-grid" enctype="multipart/form-data">
+      <input name="customerName" placeholder="Customer Name" required>
+      <input name="rating" type="number" min="1" max="5" value="5">
+      <textarea class="full" name="message" placeholder="Message" required></textarea>
+      <input class="full" type="file" name="customerPhoto" accept="image/*">
+      <label class="full"><input type="checkbox" name="approved"> Approved for public display</label>
+      <div class="full"><button type="submit">Save Testimonial</button></div>
+    </form></div>
+    <div class="panel"><h2>All Testimonials</h2><table><thead><tr><th>Name</th><th>Rating</th><th>Approval</th><th>Actions</th></tr></thead><tbody id="testimonials-admin-table"></tbody></table></div>
+  </main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-testimonials.js"></script>
+</body></html>
+
+

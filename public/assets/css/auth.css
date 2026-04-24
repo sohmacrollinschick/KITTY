@@ -1,0 +1,139 @@
+:root {
+  --bg: #fffaf4;
+  --card: #ffffff;
+  --text: #2f2a24;
+  --muted: #7a6a58;
+  --gold: #b9935b;
+  --rose: #f4d7d0;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top right, #fff1e9, var(--bg) 55%);
+}
+
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: min(980px, 92%);
+  margin: 0 auto;
+  padding: 18px 0;
+}
+
+.auth-header .brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.auth-header nav a {
+  margin-left: 12px;
+  color: #6e5840;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-shell {
+  min-height: calc(100vh - 70px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: min(470px, 100%);
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid #eedfcc;
+  box-shadow: 0 20px 42px rgba(131, 100, 66, 0.14);
+  padding: 24px;
+}
+
+h1 { margin: 0 0 8px; }
+.muted { color: var(--muted); margin: 0 0 18px; }
+
+.field { margin-bottom: 12px; }
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #5e4d39;
+}
+
+input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 11px;
+  border: 1px solid #e7d7c2;
+  font: inherit;
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #7a6142;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-btn {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(120deg, #cda975, #b9894f);
+}
+
+.error {
+  color: #a22b2b;
+  font-size: 0.92rem;
+  min-height: 20px;
+  margin-top: 2px;
+}
+
+.success {
+  color: #1f7a3d;
+  font-size: 0.92rem;
+  min-height: 20px;
+  margin-top: 2px;
+}
+
+.note {
+  margin-top: 10px;
+  text-align: center;
+  color: #6a5c4e;
+}
+
+.note a {
+  color: #7a5728;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .auth-header {
+    width: 94%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .auth-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+}

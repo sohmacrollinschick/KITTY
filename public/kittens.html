@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Available Kittens</title><link rel="stylesheet" href="/assets/css/main.css"></head>
+<body>
+<header class="site-header"><div class="container nav-wrap"><div class="brand"><img data-logo alt="logo" style="height:30px;display:none;" onload="this.style.display='block'"> <span data-business-name>Velvet Paws Cattery</span></div><nav class="nav-links"></nav></div></header>
+<section class="section"><div class="container"><h1>Available Kittens</h1><p class="muted">Filter by age, gender, price, and status.</p>
+<form id="filter-form" class="form-grid card" style="padding:14px;">
+<input name="age" placeholder="Age (e.g. 10 weeks)"><select name="gender"><option value="">Any Gender</option><option>Male</option><option>Female</option></select>
+<input name="maxPrice" type="number" placeholder="Max Price"><select name="status"><option value="">Any Status</option><option>Available</option><option>Reserved</option><option>Sold</option></select>
+<div class="full"><button class="btn btn-primary" type="submit">Apply Filters</button></div>
+</form>
+<div id="kittens-grid" class="grid kittens-grid" style="margin-top:14px;"></div></div></section>
+<footer><div class="container">© <span data-business-name></span></div></footer>
+<script src="/assets/js/site.js"></script><script src="/assets/js/kittens.js"></script>
+</body></html>
+
+

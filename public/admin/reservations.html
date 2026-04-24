@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Reservations Management</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="/admin/dashboard">Dashboard</a><a href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a href="/admin/inquiries">Inquiries</a><a class="active" href="/admin/reservations">Reservations</a><a href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content">
+    <div class="panel"><h1>Add Reservation</h1><form id="reservation-form" class="form-grid">
+      <input name="customerName" placeholder="Customer Name" required><input name="email" type="email" placeholder="Email" required>
+      <input name="phone" placeholder="Phone"><select id="kitten" name="kitten" required></select>
+      <select name="depositStatus"><option>Paid</option><option selected>Pending</option><option>Cancelled</option></select>
+      <select name="reservationStatus">
+        <option selected>Open</option>
+        <option>Confirmed</option>
+        <option>Completed</option>
+        <option>Cancelled</option>
+      </select>
+      <div class="full"><button type="submit">Create Reservation</button></div>
+    </form></div>
+    <div class="panel"><h2>Reservations</h2><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Kitten</th><th>Deposit</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="reservations-table"></tbody></table></div>
+  </main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-reservations.js"></script>
+</body></html>
+
+

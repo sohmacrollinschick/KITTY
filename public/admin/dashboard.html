@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a class="active" href="/admin/dashboard">Dashboard</a><a href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a href="/admin/inquiries">Inquiries</a><a href="/admin/reservations">Reservations</a><a href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content">
+    <div class="panel"><h1>Dashboard</h1><div class="stats">
+      <div class="stat"><div>Total Kittens</div><strong id="stat-total">0</strong></div>
+      <div class="stat"><div>Available</div><strong id="stat-available">0</strong></div>
+      <div class="stat"><div>Reserved</div><strong id="stat-reserved">0</strong></div>
+      <div class="stat"><div>Sold</div><strong id="stat-sold">0</strong></div>
+    </div></div>
+    <div class="panel"><h2>Recent Inquiries</h2><table><thead><tr><th>Name</th><th>Email</th><th>Kitten</th><th>Status</th><th>Date</th></tr></thead><tbody id="recent-inquiries"></tbody></table></div>
+  </main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-dashboard.js"></script>
+</body></html>
+
+

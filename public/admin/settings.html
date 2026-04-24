@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Settings</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="/admin/dashboard">Dashboard</a><a href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a href="/admin/inquiries">Inquiries</a><a href="/admin/reservations">Reservations</a><a href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a class="active" href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content">
+    <div class="panel"><h1>Site Settings</h1><form id="settings-form" class="form-grid" enctype="multipart/form-data">
+      <input name="businessName" placeholder="Business Name" required>
+      <input name="contactEmail" type="email" placeholder="Contact Email" required>
+      <input name="phone" placeholder="Phone">
+      <input name="address" placeholder="Address">
+      <input name="instagram" placeholder="Instagram URL">
+      <input name="facebook" placeholder="Facebook URL">
+      <input name="tiktok" placeholder="TikTok URL">
+      <input type="file" name="logo" accept="image/*">
+      <input type="color" name="primary" value="#bfa072">
+      <input type="color" name="accent" value="#f4d7d0">
+      <input type="color" name="background" value="#fffdf8">
+      <div class="full"><button type="submit">Save Settings</button></div>
+    </form></div>
+  </main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-settings.js"></script>
+</body></html>
+
+

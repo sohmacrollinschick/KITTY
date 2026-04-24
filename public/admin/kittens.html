@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Kittens Management</title><link rel="stylesheet" href="/assets/css/admin.css"></head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <h3>Admin Panel</h3>
+    <a href="/admin/dashboard">Dashboard</a><a class="active" href="/admin/kittens">Manage Kittens</a><a href="/admin/users">Users</a><a href="/admin/inquiries">Inquiries</a><a href="/admin/reservations">Reservations</a><a href="/admin/testimonials">Testimonials</a><a href="/admin/cms">CMS</a><a href="/admin/settings">Settings</a>
+    <button id="logout-btn" style="margin-top:12px;">Logout</button>
+  </aside>
+  <main class="content">
+    <div class="panel"><h1 id="form-title">Add New Kitten</h1>
+      <form id="kitten-form" enctype="multipart/form-data" class="form-grid">
+        <input name="name" placeholder="Name" required>
+        <input name="dob" type="date" placeholder="DOB">
+        <input name="age" placeholder="Age" required>
+        <input name="breed" placeholder="Breed" required>
+        <select name="gender" required><option>Male</option><option>Female</option></select>
+        <input name="price" type="number" placeholder="Price" required>
+        <select name="status" required><option>Available</option><option>Reserved</option><option>Sold</option></select>
+        <input name="temperament" placeholder="Temperament">
+        <input class="full" name="videoUrl" placeholder="Optional Video URL">
+        <textarea class="full" name="description" placeholder="Description"></textarea>
+        <input class="full" type="file" name="images" multiple accept="image/*">
+        <label><input name="visible" type="checkbox" checked> Visible</label>
+        <label><input name="featured" type="checkbox"> Featured</label>
+        <div class="full"><button type="submit">Save Kitten</button></div>
+      </form>
+    </div>
+    <div class="panel"><h2>All Kittens</h2><table><thead><tr><th>Name</th><th>Gender</th><th>Age</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead><tbody id="kittens-table"></tbody></table></div>
+  </main>
+</div>
+<script src="/assets/js/admin-common.js"></script><script src="/assets/js/admin-kittens.js"></script>
+</body></html>
+
+
