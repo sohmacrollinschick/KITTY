@@ -15,6 +15,10 @@ const run = async () => {
     existing.fullName = existing.fullName || 'Primary Admin';
     existing.role = 'admin';
     existing.password = password;
+    existing.isVerified = true;
+    existing.otp = '';
+    existing.otpExpires = null;
+    existing.otpPurpose = '';
     await existing.save();
     console.log('Existing account synced as admin (role and password updated)');
     process.exit(0);
@@ -24,7 +28,8 @@ const run = async () => {
     fullName: 'Primary Admin',
     email,
     password,
-    role: 'admin'
+    role: 'admin',
+    isVerified: true
   });
 
   console.log(`Admin created: ${email}`);

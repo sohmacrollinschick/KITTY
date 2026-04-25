@@ -5,8 +5,12 @@ const userSchema = new mongoose.Schema(
   {
     fullName: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, required: true, minlength: 8 },
-    role: { type: String, enum: ['admin', 'user'], default: 'user' }
+    password: { type: String, required: true, minlength: 6 },
+    role: { type: String, enum: ['admin', 'user'], default: 'user' },
+    otp: { type: String, default: '' },
+    otpExpires: { type: Date, default: null },
+    otpPurpose: { type: String, enum: ['register', 'login', ''], default: '' },
+    isVerified: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

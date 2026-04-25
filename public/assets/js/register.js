@@ -40,11 +40,12 @@ form?.addEventListener('submit', async (e) => {
       return;
     }
 
-    successEl.textContent = 'Registration successful. Redirecting to login...';
-    form.reset();
+    successEl.textContent = 'OTP sent to your email. Redirecting...';
+    sessionStorage.setItem('otp_email', data.email || payload.email);
+    sessionStorage.setItem('otp_flow', 'register');
     setTimeout(() => {
-      window.location.href = '/login';
-    }, 900);
+      window.location.href = `/otp?email=${encodeURIComponent(data.email || payload.email)}&flow=register`;
+    }, 700);
   } catch (_error) {
     errorEl.textContent = 'Unable to reach server. Check internet/database and try again.';
   }

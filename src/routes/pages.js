@@ -7,7 +7,8 @@ const MAIN_ADMIN_EMAIL = 'sohmacrollins99@gmail.com';
 
 const guestPages = {
   '/login': 'login.html',
-  '/register': 'register.html'
+  '/register': 'register.html',
+  '/otp': 'otp.html'
 };
 
 const userPages = {

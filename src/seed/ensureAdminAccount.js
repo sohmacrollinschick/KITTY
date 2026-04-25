@@ -15,6 +15,10 @@ const ensureAdminAccount = async () => {
     existing.fullName = existing.fullName || 'Primary Admin';
     existing.role = 'admin';
     existing.password = password;
+    existing.isVerified = true;
+    existing.otp = '';
+    existing.otpExpires = null;
+    existing.otpPurpose = '';
     await existing.save();
     return;
   }
@@ -23,7 +27,8 @@ const ensureAdminAccount = async () => {
     fullName: 'Primary Admin',
     email: normalized,
     password,
-    role: 'admin'
+    role: 'admin',
+    isVerified: true
   });
 };
 

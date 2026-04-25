@@ -32,8 +32,9 @@ form?.addEventListener('submit', async (e) => {
       return;
     }
 
-    localStorage.setItem('token', data.token || 'session-auth');
-    window.location.href = data.redirectTo || '/';
+    sessionStorage.setItem('otp_email', data.email || payload.email);
+    sessionStorage.setItem('otp_flow', 'login');
+    window.location.href = `/otp?email=${encodeURIComponent(data.email || payload.email)}&flow=login`;
   } catch (_error) {
     errorEl.textContent = 'Unable to reach server. Check internet/database and try again.';
   }

@@ -16,6 +16,11 @@ const registerValidation = [
     .withMessage('Confirm password must match password')
 ];
 
+const otpValidation = [
+  body('email').isEmail().withMessage('Valid email required'),
+  body('otp').trim().isLength({ min: 6, max: 6 }).withMessage('OTP must be 6 digits')
+];
+
 const inquiryValidation = [
   body('name').trim().isLength({ min: 2, max: 80 }),
   body('email').isEmail(),
@@ -56,6 +61,7 @@ const kittenFilterValidation = [
 module.exports = {
   loginValidation,
   registerValidation,
+  otpValidation,
   inquiryValidation,
   reservationValidation,
   kittenValidation,

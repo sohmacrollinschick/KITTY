@@ -115,30 +115,68 @@ button.ghost {
 }
 
 @media (max-width: 900px) {
-  .admin-layout { grid-template-columns: 1fr; }
-  .sidebar { height: auto; position: static; }
-  .form-grid { grid-template-columns: 1fr; }
-}
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
 
-@media (max-width: 700px) {
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px;
+  }
+
+  .sidebar h3 {
+    margin: 0 8px 0 0;
+    font-size: 1rem;
+    flex: 0 0 auto;
+  }
+
+  .sidebar a {
+    display: inline-flex;
+    width: auto;
+    margin: 0;
+    flex: 0 0 auto;
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  .sidebar button {
+    flex: 0 0 auto;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
   .content {
     padding: 14px;
   }
 
-  .sidebar {
-    padding: 12px;
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 
-  .sidebar a {
-    display: inline-block;
-    width: calc(50% - 8px);
-    margin-right: 6px;
-    margin-bottom: 8px;
-    vertical-align: top;
+  table {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    padding: 8px;
   }
 
   th, td {
     min-width: 120px;
     font-size: 0.9rem;
+  }
+
+  .panel {
+    padding: 12px;
   }
 }

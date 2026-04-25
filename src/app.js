@@ -9,6 +9,12 @@ const authApi = require('./routes/api/auth');
 const pages = require('./routes/pages');
 
 const app = express();
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Needed behind proxies (Render/Railway/Vercel/etc.) so secure cookies work.
+if (isProduction) {
+  app.set('trust proxy', 1);
+}
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -18,11 +24,14 @@ app.use(
   session({
     // Session secret is loaded from env in production; fallback is only for local boot convenience.
     secret: process.env.SESSION_SECRET || 'dev-only-change-this-secret',
+    name: 'kitten.sid',
     resave: false,
     saveUninitialized: false,
+    proxy: isProduction,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 1000 * 60 * 60 * 6
     }
   })
@@ -32,6 +41,8 @@ app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 app.use('/api/auth', authApi);
+// Alias endpoints (e.g. /api/verify-otp, /api/login-verify-otp) for simpler client integration.
+app.use('/api', authApi);
 app.use('/api', publicApi);
 app.use('/api/admin', adminApi);
 app.use('/', pages);

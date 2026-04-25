@@ -58,6 +58,9 @@ cp .env.example .env
 3. Fill `.env` values:
 - `MONGODB_URI` = your MongoDB connection string
 - `SESSION_SECRET` = long random secret
+- `JWT_SECRET` = long random JWT secret
+- `EMAIL_USER` = Gmail address used for OTP delivery
+- `EMAIL_PASS` = Gmail App Password (not your normal Gmail password)
 - `ADMIN_SEED_EMAIL` and `ADMIN_SEED_PASSWORD`
 
 4. Seed first admin user:
@@ -78,6 +81,16 @@ npm run dev
 - Public site: `http://localhost:5000`
 - Shared login: `http://localhost:5000/login`
 - Admin dashboard (after admin login): `http://localhost:5000/admin/dashboard`
+
+## OTP Authentication Flow
+- Register:
+  - Submit register form.
+  - OTP is sent to your email.
+  - Enter OTP on `/otp` to verify account.
+- Login:
+  - Submit login form.
+  - OTP is sent to your email.
+  - Enter OTP on `/otp` to complete login and receive auth token/session.
 
 ## Security Notes
 - Never expose `MONGODB_URI` in frontend code.
