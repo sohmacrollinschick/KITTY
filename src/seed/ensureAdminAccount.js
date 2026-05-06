@@ -1,10 +1,9 @@
 const User = require('../models/User');
-const MAIN_ADMIN_EMAIL = 'sohmacrollins99@gmail.com';
-const MAIN_ADMIN_PASSWORD = '123456mac';
+const { mainAdminEmail, mainAdminPassword } = require('../utils/authState');
 
 const ensureAdminAccount = async () => {
-  const email = MAIN_ADMIN_EMAIL;
-  const password = MAIN_ADMIN_PASSWORD;
+  const email = mainAdminEmail;
+  const password = mainAdminPassword;
 
   if (!email || !password) return;
 

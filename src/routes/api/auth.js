@@ -1,46 +1,47 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 const validate = require('../../middleware/validate');
 const { loginValidation, registerValidation, otpValidation } = require('../../middleware/validators');
 const { loginLimiter, registerLimiter, otpLimiter } = require('../../middleware/rateLimiters');
 const { generateOTP } = require('../../utils/otp');
 const { sendOTPEmail } = require('../../utils/mailer');
+const {
+  clearAuth,
+  hydrateUserFromRequest,
+  mainAdminEmail,
+  mainAdminPassword,
+  persistAuth
+} = require('../../utils/authState');
 
 const router = express.Router();
-const MAIN_ADMIN_EMAIL = 'sohmacrollins99@gmail.com';
-const MAIN_ADMIN_PASSWORD = '123456mac';
 
 const issueAuth = (req, res, user, redirectTo) => {
-  req.session.user = {
-    id: user._id.toString(),
-    fullName: user.fullName,
-    email: user.email,
-    role: user.role
-  };
+  const { authUser, token } = persistAuth(req, res, user);
 
-  const token = jwt.sign(
-    { id: user._id.toString(), email: user.email, role: user.role },
-    process.env.JWT_SECRET || process.env.SESSION_SECRET || 'dev-jwt-secret',
-    { expiresIn: '6h' }
-  );
-
-  return req.session.save((err) => {
-    if (err) return res.status(500).json({ message: 'Session save failed' });
+  if (!req.session?.save) {
     return res.json({
       message: 'OTP verified. Login successful.',
-      role: user.role,
+      role: authUser.role,
       token,
       redirectTo
     });
-  });
+  }
+
+  return req.session.save(() =>
+    res.json({
+      message: 'OTP verified. Login successful.',
+      role: authUser.role,
+      token,
+      redirectTo
+    })
+  );
 };
 
 router.post('/register', registerLimiter, registerValidation, validate, async (req, res) => {
   const { fullName, email, password } = req.body;
   const normalizedEmail = email.toLowerCase();
 
-  if (normalizedEmail === MAIN_ADMIN_EMAIL) {
+  if (normalizedEmail === mainAdminEmail) {
     return res.status(403).json({ message: 'This email is reserved for admin login' });
   }
 
@@ -109,12 +110,12 @@ router.post('/login', loginLimiter, loginValidation, validate, async (req, res) 
 
   let user = await User.findOne({ email: normalizedEmail });
 
-  if (normalizedEmail === MAIN_ADMIN_EMAIL && password === MAIN_ADMIN_PASSWORD) {
+  if (normalizedEmail === mainAdminEmail && password === mainAdminPassword) {
     if (!user) {
       user = await User.create({
         fullName: 'Admin',
-        email: MAIN_ADMIN_EMAIL,
-        password: MAIN_ADMIN_PASSWORD,
+        email: mainAdminEmail,
+        password: mainAdminPassword,
         role: 'admin',
         isVerified: true
       });
@@ -218,31 +219,23 @@ router.post('/resend-otp', otpLimiter, async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie('kitten.sid');
+  clearAuth(req, res, () => {
     res.json({ message: 'Logged out' });
   });
 });
 
-router.get('/me', (req, res) => {
-  if (!req.session?.user?.id) return res.status(401).json({ message: 'Unauthorized' });
+router.get('/me', async (req, res) => {
+  try {
+    const authUser = await hydrateUserFromRequest(req);
+    if (!authUser) return res.status(401).json({ message: 'Unauthorized' });
 
-  return User.findById(req.session.user.id)
-    .select('fullName email role isVerified')
-    .lean()
-    .then((user) => {
-      if (!user) return res.status(401).json({ message: 'Unauthorized' });
+    const user = await User.findById(authUser.id).select('isVerified').lean();
+    if (!user) return res.status(401).json({ message: 'Unauthorized' });
 
-      req.session.user = {
-        id: req.session.user.id,
-        fullName: user.fullName,
-        email: user.email,
-        role: user.role
-      };
-
-      return res.json({ user: req.session.user, isVerified: user.isVerified });
-    })
-    .catch(() => res.status(500).json({ message: 'Server error' }));
+    return res.json({ user: authUser, isVerified: user.isVerified });
+  } catch {
+    return res.status(500).json({ message: 'Server error' });
+  }
 });
 
 module.exports = router;

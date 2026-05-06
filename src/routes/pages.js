@@ -1,9 +1,8 @@
 const express = require('express');
 const path = require('path');
-const User = require('../models/User');
+const { hydrateUserFromRequest } = require('../utils/authState');
 
 const router = express.Router();
-const MAIN_ADMIN_EMAIL = 'sohmacrollins99@gmail.com';
 
 const guestPages = {
   '/login': 'login.html',
@@ -36,29 +35,20 @@ const adminPages = {
 
 const sendPage = (res, file) => res.sendFile(path.join(__dirname, '../../public', file));
 
-const getEffectiveRole = async (sessionUser) => {
-  if (!sessionUser?.id) return null;
-  const user = await User.findById(sessionUser.id).select('email role fullName').lean();
-  if (!user) return null;
-  const role = user.email?.toLowerCase() === MAIN_ADMIN_EMAIL ? 'admin' : user.role;
-  return {
-    id: user._id.toString(),
-    fullName: user.fullName,
-    email: user.email,
-    role
-  };
-};
-
-const ensureGuest = (req, res, next) => {
-  const role = req.session?.user?.role;
-  if (!role) return next();
-  if (role === 'admin') return res.redirect('/admin/dashboard');
-  return res.redirect('/home');
+const ensureGuest = async (req, res, next) => {
+  try {
+    const authUser = await hydrateUserFromRequest(req);
+    if (!authUser) return next();
+    if (authUser.role === 'admin') return res.redirect('/admin/dashboard');
+    return res.redirect('/home');
+  } catch {
+    return next();
+  }
 };
 
 const ensureUser = async (req, res, next) => {
   try {
-    const effectiveUser = await getEffectiveRole(req.session?.user);
+    const effectiveUser = await hydrateUserFromRequest(req);
     if (!effectiveUser) return res.redirect('/login');
     req.session.user = effectiveUser;
     if (effectiveUser.role === 'admin') return res.redirect('/admin/dashboard');
@@ -71,7 +61,7 @@ const ensureUser = async (req, res, next) => {
 
 const ensureAdmin = async (req, res, next) => {
   try {
-    const effectiveUser = await getEffectiveRole(req.session?.user);
+    const effectiveUser = await hydrateUserFromRequest(req);
     if (!effectiveUser) return res.redirect('/login');
     req.session.user = effectiveUser;
     if (effectiveUser.role !== 'admin') return res.redirect('/home');
