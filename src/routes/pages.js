@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const ensureAppReady = require('../config/bootstrap');
 const { hydrateUserFromRequest } = require('../utils/authState');
 
 const router = express.Router();
@@ -48,6 +49,7 @@ const ensureGuest = async (req, res, next) => {
 
 const ensureUser = async (req, res, next) => {
   try {
+    await ensureAppReady();
     const effectiveUser = await hydrateUserFromRequest(req);
     if (!effectiveUser) return res.redirect('/login');
     req.session.user = effectiveUser;
@@ -61,6 +63,7 @@ const ensureUser = async (req, res, next) => {
 
 const ensureAdmin = async (req, res, next) => {
   try {
+    await ensureAppReady();
     const effectiveUser = await hydrateUserFromRequest(req);
     if (!effectiveUser) return res.redirect('/login');
     req.session.user = effectiveUser;

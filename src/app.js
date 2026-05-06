@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const morgan = require('morgan');
+const ensureAppReady = require('./config/bootstrap');
 
 const publicApi = require('./routes/api/publicApi');
 const adminApi = require('./routes/api/adminApi');
@@ -40,11 +41,21 @@ app.use(
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
-app.use('/api/auth', authApi);
+const requireAppReady = async (_req, res, next) => {
+  try {
+    await ensureAppReady();
+    return next();
+  } catch (error) {
+    console.error('[bootstrap] request init failed:', error.message);
+    return res.status(500).json({ message: 'Server configuration error. Check database and environment variables.' });
+  }
+};
+
+app.use('/api/auth', requireAppReady, authApi);
 // Alias endpoints (e.g. /api/verify-otp, /api/login-verify-otp) for simpler client integration.
-app.use('/api', authApi);
-app.use('/api', publicApi);
-app.use('/api/admin', adminApi);
+app.use('/api', requireAppReady, authApi);
+app.use('/api', requireAppReady, publicApi);
+app.use('/api/admin', requireAppReady, adminApi);
 app.use('/', pages);
 
 app.use((err, _req, res, _next) => {
